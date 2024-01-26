@@ -1,67 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
   View,
+  StyleSheet,
+  StatusBar,
+  StatusBarStyle,
+  StatusBarAnimation,
 } from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {useColorScheme} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {colors} from './src/constants/colors';
+import AuthComponent from './src/screens/auth/AuthComponent';
+import HomeComponent from './src/screens/home/HomeComponent';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const isDarkMode: boolean = useColorScheme() === 'dark';
+  const [isUserSignedIn, setIsUserSignedIn] = useState<boolean>(false);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}
-        >
-          <Text>Netflix</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <View style={styles.appMainContainer}>
+        <StatusBar
+          animated={true}
+          backgroundColor={colors.dark.secondary}
+          barStyle={'dark-content'}
+          showHideTransition={'fade'}
+        />
+        <NavigationContainer>
+          {isUserSignedIn ? <HomeComponent /> : <AuthComponent />}
+        </NavigationContainer>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  appMainContainer: {
+    flex: 1,
+    backgroundColor: colors.dark.secondary, 
   },
 });
 
