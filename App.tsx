@@ -11,6 +11,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {colors} from './src/constants/colors';
 import AuthComponent from './src/screens/auth/AuthComponent';
 import HomeComponent from './src/screens/home/HomeComponent';
+import {MenuProvider} from 'react-native-popup-menu';
 
 function App(): React.JSX.Element {
   const isDarkMode: boolean = useColorScheme() === 'dark';
@@ -18,17 +19,19 @@ function App(): React.JSX.Element {
 
   return (
     <>
-      <View style={styles.appMainContainer}>
-        <StatusBar
-          animated={true}
-          backgroundColor={colors.dark.secondary}
-          barStyle={'dark-content'}
-          showHideTransition={'fade'}
-        />
-        <NavigationContainer>
-          {isUserSignedIn ? <HomeComponent /> : <AuthComponent />}
-        </NavigationContainer>
-      </View>
+      <MenuProvider>
+        <View style={styles.appMainContainer}>
+          <StatusBar
+            animated={true}
+            backgroundColor={colors.dark.secondary}
+            barStyle={'light-content'}
+            showHideTransition={'fade'}
+          />
+          <NavigationContainer>
+            {isUserSignedIn ? <HomeComponent /> : <AuthComponent />}
+          </NavigationContainer>
+        </View>
+      </MenuProvider>
     </>
   );
 }
@@ -36,7 +39,7 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   appMainContainer: {
     flex: 1,
-    backgroundColor: colors.dark.secondary, 
+    backgroundColor: colors.dark.secondary,
   },
 });
 
