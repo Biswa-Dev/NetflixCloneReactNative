@@ -1,4 +1,11 @@
-import {View, Text, FlatList, Animated, TouchableHighlight} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Animated,
+  TouchableHighlight,
+  Image,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 
 import NLogo from '../../../assets/img/nLogo.svg';
@@ -18,10 +25,26 @@ import {onboardingData} from './OnboardingData';
 import {OnboardingItem} from './OnboaringTypes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthRouteRootStack} from '../Authtypes';
+import useOnboardingHook from './OnboardingHook';
+import GetStartedSheet from './GetStartedSheet/GetStartedSheet';
 
-type Props = NativeStackScreenProps<AuthRouteRootStack, 'Onboarding'>;
+type Props = NativeStackScreenProps<
+  AuthRouteRootStack,
+  'Onboarding',
+  undefined
+>;
 
 const OnboardingScreen = ({navigation}: Props) => {
+  const {
+    isGetStartedSheetVisible,
+    handlePrivacyPress,
+    handleLogInPress,
+    handleFaqsPress,
+    handleHelpPress,
+    handleGetStartedPress,
+    handleCloseGetStartedSheet,
+  } = useOnboardingHook({navigation});
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
@@ -52,23 +75,24 @@ const OnboardingScreen = ({navigation}: Props) => {
       <View style={styles.header}>
         <NLogo style={styles.nLogo} />
         <View style={styles.headerNavs}>
-          <Text style={styles.navText}>PRIVACY</Text>
-          <Text
-            style={styles.navText}
-            onPress={() => {
-              navigation.navigate('Signin');
-            }}>
+          <Text style={styles.navText} onPress={handlePrivacyPress}>
+            PRIVACY
+          </Text>
+          <Text style={styles.navText} onPress={handleLogInPress}>
             LOG IN
           </Text>
           <Menu>
             <MenuTrigger customStyles={menuTrigger}>
-              <Text>...</Text>
+              <Image
+                source={require('../../../assets/img/icons/verticalThreeDot.png')}
+                style={{width: 20, height: 22}}
+              />
             </MenuTrigger>
             <MenuOptions customStyles={{optionText: styles.menuOptionText}}>
-              <MenuOption onSelect={() => {}}>
+              <MenuOption onSelect={handleFaqsPress}>
                 <Text style={styles.menuOptionText}>FAQs</Text>
               </MenuOption>
-              <MenuOption onSelect={() => {}}>
+              <MenuOption onSelect={handleHelpPress}>
                 <Text style={styles.menuOptionText}>HELP</Text>
               </MenuOption>
             </MenuOptions>
@@ -92,10 +116,16 @@ const OnboardingScreen = ({navigation}: Props) => {
         ref={slidesRef}
       />
       <Paginator data={onboardingData} scrollX={scrollX} />
-
       <View style={styles.footer}>
-        <PrimaryButton title="Get Started" onPressFunc={() => {}} />
+        <PrimaryButton
+          title="Get Started"
+          onPressFunc={handleGetStartedPress}
+        />
       </View>
+      <GetStartedSheet 
+        isGetStartedSheetVisible={isGetStartedSheetVisible}
+        handleCloseGetStartedSheet={handleCloseGetStartedSheet}
+      />
     </View>
   );
 };
