@@ -11,6 +11,7 @@ export const colors = {
         black: '#000000',
         smokyBlack: '#0F0E0E',
         graniteGrey: '#646161',
-        vividMalachite: '#19CD36'
+        vividMalachite: '#19CD36',
+        snow: '#FEFBFB',
     }
 }

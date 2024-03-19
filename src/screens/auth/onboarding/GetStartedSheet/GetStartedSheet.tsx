@@ -10,7 +10,7 @@ import React from 'react';
 
 import styles from './GetStartedSheetStyles';
 
-import PrimaryButton from '../../../../components/RectangularButton/PrimaryButton';
+import PrimaryButton from '../../../../components/RectangularButton/PrimaryButton/PrimaryButton';
 
 type GetStartedSheetProps = {
   isGetStartedSheetVisible: boolean;
