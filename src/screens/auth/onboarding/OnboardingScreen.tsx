@@ -18,7 +18,7 @@ import {
 } from 'react-native-popup-menu';
 
 import Paginator from './Paginator/Paginator';
-import PrimaryButton from '../../../components/RectangularButton/PrimaryButton';
+import PrimaryButton from '../../../components/RectangularButton/PrimaryButton/PrimaryButton';
 import styles from './OnboardingStyles';
 
 import {onboardingData} from './OnboardingData';
